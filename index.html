@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -119,8 +119,8 @@ const L=[
 {id:"06",t:"Network Lab 2",c:"Routing",p:"tp2/HTML5/",lvl:2,min:50,d:"A guided lab on configuration, troubleshooting and verification across a larger topology.",k:["Static routes","Dynamic routing","Debugging"]},
 {id:"07",t:"GRE Tunnel",c:"Security",p:"tp4-gre/",lvl:2,min:30,d:"Build a tunnel between two sites and watch how packets are encapsulated.",k:["Encapsulation","Tunnel interfaces","Routing over tunnels"]},
 {id:"08",t:"Site-to-Site VPN",c:"Security",p:"tp4-vpn/",lvl:3,min:50,d:"Protect traffic between two sites with an encrypted IPsec tunnel.",k:["IPsec","Encryption","Peer authentication"]},
-{id:"09",t:"TP5 — FR",c:"Automation",p:"TP5-FR/",lvl:2,min:45,d:"Practical project 5, French version. Replace with the real topic.",k:["TP5","Practical","FR"]},
-{id:"10",t:"TP5 — HS",c:"Automation",p:"TP5-HS/",lvl:2,min:45,d:"Practical project 5, HS version. Replace with the real topic.",k:["TP5","Practical","HS"]}];
+{id:"09",t:"TP5 — FR",c:"Automation",p:"TP5-FR/HTML5/",lvl:2,min:45,d:"Practical project 5, French version. Replace with the real topic.",k:["TP5","Practical","FR"]},
+{id:"10",t:"TP5 — HS",c:"Automation",p:"TP5-HS/HTML5/",lvl:2,min:45,d:"Practical project 5, HS version. Replace with the real topic.",k:["TP5","Practical","HS"]}];
 /* ===================================================================== */
 const $=i=>document.getElementById(i),cats=[...new Set(L.map(x=>x.c))],S={};
 let sel=L[0].id,flt="All",done=new Set();
@@ -169,3 +169,4 @@ drawAll();check();
 </script>
 </body>
 </html>
+
