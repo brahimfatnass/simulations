@@ -1,109 +1,171 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mes Simulations</title>
-  <style>
-    :root {
-      --bg: #f5f6f8;
-      --card: #ffffff;
-      --text: #1f2430;
-      --muted: #6b7280;
-      --accent: #2563eb;
-      --border: #e3e6eb;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #14171c;
-        --card: #1e232b;
-        --text: #eceff4;
-        --muted: #9aa3b2;
-        --accent: #60a5fa;
-        --border: #2c323c;
-      }
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 48px 20px; }
-    h1 { margin: 0 0 6px; font-size: 2rem; }
-    p.sub { margin: 0 0 32px; color: var(--muted); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
-    }
-    a.card {
-      display: block;
-      padding: 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform .15s, border-color .15s;
-    }
-    a.card:hover { transform: translateY(-3px); border-color: var(--accent); }
-    .num { font-size: .8rem; color: var(--accent); font-weight: 600; }
-    .title { font-size: 1.15rem; font-weight: 600; margin: 6px 0 4px; }
-    .desc { font-size: .9rem; color: var(--muted); }
-    footer { margin-top: 40px; font-size: .85rem; color: var(--muted); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network Labs — interactive simulations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#070b13;--surf:#0c1421;--ink:#e7f2f5;--mut:#8296a7;--line:#1c3042;--acc:#c8ff4d;--dot:#162a3b;
+--Routing:#c8ff4d;--Security:#ffb86b;--Services:#56e6ff;--Automation:#a98bff;
+--f:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:400 16px/1.5 var(--f);color:var(--ink);background:radial-gradient(ellipse at 70% -10%,#14283a 0,transparent 50%),radial-gradient(var(--dot) 1.2px,transparent 1.3px) 0 0/26px 26px,var(--bg)}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1280px;margin:auto;padding:0 28px}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.03em;display:flex;gap:10px;align-items:center}
+.logo i{width:26px;height:26px;border-radius:8px;background:var(--acc);display:grid;place-items:center;color:#11190a;font-style:normal;font-size:14px;box-shadow:0 0 18px #c8ff4d55}
+.prog{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--mut)}
+.prog svg{width:40px;height:40px;transform:rotate(-90deg)}
+.hero{display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:start;padding:20px 0 10px}
+h1{font-size:clamp(40px,5.4vw,70px);line-height:1;letter-spacing:-.045em;font-weight:800;margin:10px 0 18px}
+.lead{color:var(--mut);max-width:480px;font-size:17px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+.btn{display:inline-flex;gap:8px;align-items:center;padding:13px 20px;border-radius:12px;border:1.5px solid var(--line);background:var(--surf);font-weight:600;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);border-color:var(--acc);box-shadow:0 0 24px #c8ff4d33}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#11190a;font-weight:800}
+.btn[aria-disabled=true]{opacity:.45;pointer-events:none}
+.stats{display:flex;gap:30px;flex-wrap:wrap}.stats b{display:block;font-size:30px;letter-spacing:-.03em}.stats span{color:var(--mut);font-size:13px}
+.mapbox{background:var(--surf);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px #0008,0 0 0 1px #56e6ff12}
+#map{display:block;width:100%;height:auto}
+.link{stroke:var(--line);stroke-width:2;fill:none}.link.on{stroke:var(--c);stroke-width:2.5}
+.hub text{font:700 12px var(--f);fill:var(--mut);text-anchor:middle}
+.hub rect{fill:var(--surf);stroke:var(--c);stroke-width:2}
+.n{cursor:pointer;transition:opacity .2s}.n circle{fill:var(--c);transition:r .15s}.n text{font:800 11px var(--f);fill:#070b13;text-anchor:middle;pointer-events:none}
+.n:hover circle,.n.sel circle{r:20;filter:drop-shadow(0 0 8px var(--c))}.n.sel .ring{opacity:1}.ring{fill:none!important;stroke:var(--c);stroke-width:2;opacity:0;transition:.2s}
+.n.dim{opacity:.18}.n.done circle{stroke:var(--surf);stroke-width:3}
+.lbl{font:700 13px var(--f);fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--surf);stroke-width:5px}
+.detail{border-top:1px solid var(--line);padding:20px 24px;display:grid;gap:10px}
+.badge{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c),transparent 88%);padding:4px 10px;border-radius:99px;width:max-content}
+.detail h2{margin:0;font-size:26px;letter-spacing:-.03em}.detail p{margin:0;color:var(--mut)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{font-size:12px;border:1px solid var(--line);border-radius:8px;padding:3px 8px;color:var(--mut)}
+.facts{display:flex;gap:18px;font-size:13px;color:var(--mut)}.facts b{color:var(--ink)}
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:34px 0 18px}
+.search{flex:1;min-width:220px}.search input,select{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surf)}
+select{width:auto}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surf);border-radius:99px;padding:8px 14px;font-weight:600;font-size:14px;display:flex;gap:8px;align-items:center}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c,var(--ink))}
+.chip:hover{border-color:var(--c,var(--acc))}.chip[aria-pressed=true]{background:var(--c,var(--acc));color:#070b13;border-color:var(--c,var(--acc))}.chip[aria-pressed=true] i{background:#070b13}.chip small{opacity:.65}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#101c2a,#0a121d);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:transform .2s,box-shadow .2s}
+.card:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--c),transparent 76%),transparent 70%)}
+.card:hover,.card.sel{transform:translateY(-5px);border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 18px 44px color-mix(in srgb,var(--c),transparent 78%)}
+.card:hover:before,.card.sel:before{opacity:1}
+.card h3 a{transition:color .2s}.card:hover h3 a{color:var(--c)}
+.card .pill{transition:.2s}.card:hover .pill{color:var(--c);border-color:color-mix(in srgb,var(--c),transparent 60%);background:color-mix(in srgb,var(--c),transparent 92%)}
+.go{display:inline-block;transition:transform .2s}.card:hover .go{transform:translateX(5px)}
+.card h3{margin:0;font-size:19px;letter-spacing:-.02em}.card h3 a:after{content:"";position:absolute;inset:0;border-radius:16px}
+.card p{margin:0;color:var(--mut);font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mut);font-weight:600}
+.done{position:relative;z-index:2;display:flex;gap:6px;align-items:center;cursor:pointer}.done input{accent-color:var(--c);width:17px;height:17px}
+.foot{margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--mut)}
+.go{font-weight:700;color:var(--c)}
+.card.off{opacity:.55}.card.off h3 a:after{display:none}
+.st{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;background:color-mix(in srgb,var(--Routing),transparent 85%);color:var(--Routing)}
+.off .st{background:color-mix(in srgb,var(--Automation),transparent 85%);color:var(--Automation)}
+.empty{grid-column:1/-1;padding:50px;text-align:center;border:2px dashed var(--line);border-radius:16px;color:var(--mut)}
+footer{padding:50px 0 40px;color:var(--mut);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.wrap{padding:0 16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}animateMotion{display:none}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Mes Simulations</h1>
-    <p class="sub">Cliquez sur une simulation pour la lancer.</p>
+<div class="wrap">
+<header>
+  <div class="logo"><i>⌁</i>Network Labs</div>
+  <div class="prog" title="Your progress is saved in this browser"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="5"/><circle id="ring" cx="20" cy="20" r="16" fill="none" stroke="var(--acc)" stroke-width="5" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="100.5"/></svg><span id="progTxt">0 of 10 done</span></div>
+</header>
 
-    <div class="grid">
-      <a class="card" href="bgp/HTML5/">
-        <div class="num">SIMULATION 1</div>
-        <div class="title">BGP</div>
-        <div class="desc">Protocole de routage BGP</div>
-      </a>
-      <a class="card" href="natdem/">
-        <div class="num">SIMULATION 2</div>
-        <div class="title">NAT / DEM</div>
-        <div class="desc">Translation d'adresses</div>
-      </a>
-      <a class="card" href="redistribution/HTML5/">
-        <div class="num">SIMULATION 3</div>
-        <div class="title">Redistribution</div>
-        <div class="desc">Redistribution de routes</div>
-      </a>
-      <a class="card" href="tp1/HTML5/">
-        <div class="num">SIMULATION 4</div>
-        <div class="title">TP1</div>
-        <div class="desc">Travaux pratiques 1</div>
-      </a>
-      <a class="card" href="tp1_2/HTML5/">
-        <div class="num">SIMULATION 5</div>
-        <div class="title">TP1 (suite)</div>
-        <div class="desc">Travaux pratiques 1, partie 2</div>
-      </a>
-      <a class="card" href="tp2/HTML5/">
-        <div class="num">SIMULATION 6</div>
-        <div class="title">TP2</div>
-        <div class="desc">Travaux pratiques 2</div>
-      </a>
-      <a class="card" href="tp4-gre/">
-        <div class="num">SIMULATION 7</div>
-        <div class="title">TP4 : GRE</div>
-        <div class="desc">Tunnel GRE</div>
-      </a>
-      <a class="card" href="tp4-vpn/">
-        <div class="num">SIMULATION 8</div>
-        <div class="title">TP4 : VPN</div>
-        <div class="desc">Configuration VPN</div>
-      </a>
-    </div>
-
-    <footer>8 simulations interactives</footer>
+<section class="hero">
+  <div>
+    <h1>Ten network labs. One click each.</h1>
+    <p class="lead">Interactive simulations covering routing, tunnels, address translation and more. Pick a device on the map or a card below, and the lab opens right in your browser.</p>
+    <div class="cta"><a class="btn p" id="nextBtn" href="#">Start next lab ↗</a><a class="btn" href="#archive">Browse all labs</a></div>
+    <div class="stats"><div><b id="sCount">10</b><span>simulations</span></div><div><b id="sTime">0h</b><span>total practice time</span></div><div><b id="sLive">–</b><span>online now</span></div></div>
   </div>
+  <div class="mapbox">
+    <svg id="map" viewBox="0 0 600 430" role="group" aria-label="Map of labs grouped by domain"></svg>
+    <div class="detail" id="detail"></div>
+  </div>
+</section>
+
+<section id="archive">
+  <div class="tools">
+    <div class="search"><input id="q" type="search" placeholder="Search labs or protocols… (press / , Enter opens the first result)" aria-label="Search labs"></div>
+    <select id="sort" aria-label="Sort"><option value="id">Course order</option><option value="lvl">Easiest first</option><option value="min">Shortest first</option></select>
+  </div>
+  <div class="chips" id="chips"></div>
+  <p id="count" style="color:var(--mut);font-size:13px;margin:14px 0" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+</section>
+<footer><span>Click a map node to preview, then launch. Tick “Done” to track progress.</span><span id="foot"></span></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ===== EDIT HERE: p = folder (case-sensitive), lvl 1-3, min = minutes ===== */
+const L=[
+{id:"01",t:"BGP Routing",c:"Routing",p:"bgp/HTML5/",lvl:3,min:45,d:"Connect autonomous systems and see how BGP chooses the best path between networks.",k:["Autonomous systems","eBGP peering","Path selection"]},
+{id:"02",t:"NAT & Address Translation",c:"Services",p:"natdem/",lvl:2,min:30,d:"Follow a packet as private addresses are translated to public ones at the network edge.",k:["Static NAT","PAT / overload","Translation table"]},
+{id:"03",t:"Route Redistribution",c:"Routing",p:"redistribution/HTML5/",lvl:3,min:40,d:"Exchange routes between different routing protocols and avoid loops while doing it.",k:["OSPF","EIGRP","Metrics"]},
+{id:"04",t:"Network Lab 1",c:"Routing",p:"tp1/HTML5/",lvl:1,min:40,d:"A foundation lab: configure devices, assign addresses and verify connectivity.",k:["IP addressing","Basic CLI","Ping & verify"]},
+{id:"05",t:"Network Lab 1, part 2",c:"Services",p:"tp1_2/HTML5/",lvl:1,min:35,d:"Extend the first lab with more services and validate that everything still works.",k:["Services","Validation","Troubleshooting"]},
+{id:"06",t:"Network Lab 2",c:"Routing",p:"tp2/HTML5/",lvl:2,min:50,d:"A guided lab on configuration, troubleshooting and verification across a larger topology.",k:["Static routes","Dynamic routing","Debugging"]},
+{id:"07",t:"GRE Tunnel",c:"Security",p:"tp4-gre/",lvl:2,min:30,d:"Build a tunnel between two sites and watch how packets are encapsulated.",k:["Encapsulation","Tunnel interfaces","Routing over tunnels"]},
+{id:"08",t:"Site-to-Site VPN",c:"Security",p:"tp4-vpn/",lvl:3,min:50,d:"Protect traffic between two sites with an encrypted IPsec tunnel.",k:["IPsec","Encryption","Peer authentication"]},
+{id:"09",t:"TP5 — FR",c:"Automation",p:"TP5-FR/",lvl:2,min:45,d:"Practical project 5, French version. Replace with the real topic.",k:["TP5","Practical","FR"]},
+{id:"10",t:"TP5 — HS",c:"Automation",p:"TP5-HS/",lvl:2,min:45,d:"Practical project 5, HS version. Replace with the real topic.",k:["TP5","Practical","HS"]}];
+/* ===================================================================== */
+const $=i=>document.getElementById(i),cats=[...new Set(L.map(x=>x.c))],S={};
+let sel=L[0].id,flt="All",done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem("labs-done")||"[]"))}catch(e){}
+const get=id=>L.find(x=>x.id===id),dots=n=>"●".repeat(n)+"○".repeat(3-n),lv=["","Beginner","Intermediate","Advanced"];
+const hubs={Routing:[150,125],Security:[450,125],Services:[150,305],Automation:[450,305]};
+const fmt=m=>m>=60?(m/60).toFixed(1).replace(".0","")+"h":m+" min";
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),2200)}
+function pos(){const P={};cats.forEach(c=>{const h=hubs[c],a0=Math.atan2(h[1]-215,h[0]-300),ls=L.filter(x=>x.c===c);ls.forEach((x,i)=>{const a=a0+(i-(ls.length-1)/2)*.62;P[x.id]=[h[0]+84*Math.cos(a),h[1]+84*Math.sin(a)]})});return P}
+const P=pos();
+function visible(){const q=$("q").value.trim().toLowerCase(),s=$("sort").value;
+ return L.filter(x=>(flt==="All"||x.c===flt)&&(x.t+x.d+x.c+x.k.join(" ")).toLowerCase().includes(q)).sort((a,b)=>s==="id"?a.id.localeCompare(b.id):a[s]-b[s])}
+function drawMap(){const ids=new Set(visible().map(x=>x.id));let s=`<circle cx="300" cy="215" r="26" fill="var(--ink)"/><text x="300" y="220" class="lbl" style="stroke:none;fill:var(--bg);font-size:12px">LABS</text>`;
+ cats.forEach(c=>{const h=hubs[c];s+=`<path class="link" d="M300 215L${h[0]} ${h[1]}"/><circle r="4" fill="var(--${c})"><animateMotion dur="${3+cats.indexOf(c)*.6}s" repeatCount="indefinite" path="M300 215L${h[0]} ${h[1]}"/></circle>`});
+ L.forEach(x=>{const h=hubs[x.c];s+=`<path class="link ${x.id===sel?"on":""}" style="--c:var(--${x.c})" d="M${h[0]} ${h[1]}L${P[x.id][0]} ${P[x.id][1]}"/>`});
+ cats.forEach(c=>{const h=hubs[c];s+=`<g class="hub" style="--c:var(--${c})"><rect x="${h[0]-40}" y="${h[1]-16}" width="80" height="32" rx="16"/><text x="${h[0]}" y="${h[1]+4}">${c}</text></g>`});
+ L.forEach(x=>{const [px,py]=P[x.id];s+=`<g class="n ${x.id===sel?"sel":""} ${ids.has(x.id)?"":"dim"} ${done.has(x.id)?"done":""}" data-id="${x.id}" tabindex="0" role="button" aria-label="${x.t}" style="--c:var(--${x.c})" transform="translate(${px} ${py})"><circle class="ring" r="26"/><circle r="16"/><text y="4">${done.has(x.id)?"✓":x.id}</text></g>`});
+ const [sx,sy]=P[sel];s+=`<text class="lbl" x="${Math.min(520,Math.max(80,sx))}" y="${sy-30}">${get(sel).t}</text>`;$("map").innerHTML=s}
+function drawDetail(){const x=get(sel),off=S[x.id]===false;$("detail").style.setProperty("--c",`var(--${x.c})`);
+ $("detail").innerHTML=`<span class="badge">● ${x.c}</span><h2>${x.t}</h2><p>${x.d}</p><div class="facts"><span><b>${lv[x.lvl]}</b> ${dots(x.lvl)}</span><span><b>${fmt(x.min)}</b> to complete</span></div><div class="row">${x.k.map(k=>`<span class="pill">${k}</span>`).join("")}</div><div class="row"><a class="btn p" href="${x.p}" ${off?'aria-disabled="true"':""}>Launch simulation ↗</a><a class="btn" href="${x.p}" target="_blank" rel="noopener" ${off?'aria-disabled="true"':""}>New tab</a><label class="done"><input type="checkbox" id="dChk" ${done.has(x.id)?"checked":""}> Mark as done</label></div>${off?`<p style="color:var(--Automation)">This lab is not published yet. Push its folder to GitHub.</p>`:""}`;
+ $("dChk").onchange=e=>toggle(x.id,e.target.checked)}
+function drawCards(){const v=visible();$("count").textContent=`${v.length} of ${L.length} labs`+(flt!=="All"?` · ${flt}`:"");
+ $("grid").innerHTML=v.length?v.map(x=>`<article class="card ${x.id===sel?"sel":""} ${S[x.id]===false?"off":""}" data-id="${x.id}" style="--c:var(--${x.c})"><div class="top"><span>Lab ${x.id} · ${x.c}</span><label class="done"><input type="checkbox" data-d="${x.id}" ${done.has(x.id)?"checked":""}>Done</label></div><h3><a href="${x.p}">${x.t}</a></h3><p>${x.d}</p><div class="row">${x.k.slice(0,3).map(k=>`<span class="pill">${k}</span>`).join("")}</div><div class="foot"><span>${dots(x.lvl)} ${lv[x.lvl]} · ${fmt(x.min)}</span>${S[x.id]===undefined?"":`<span class="st">${S[x.id]?"Online":"Not published"}</span>`}<span class="go">Launch ↗</span></div></article>`).join(""):`<div class="empty">No labs match. Try another word or clear the filter.</div>`}
+function drawChips(){$("chips").innerHTML=["All",...cats].map(c=>`<button class="chip" style="--c:var(--${c})" aria-pressed="${c===flt}" data-f="${c}">${c==="All"?"":"<i></i>"}${c}<small>${c==="All"?L.length:L.filter(x=>x.c===c).length}</small></button>`).join("")}
+function drawStats(){const n=done.size,N=L.length;$("progTxt").textContent=`${n} of ${N} done`;$("ring").style.strokeDashoffset=100.5*(1-n/N);
+ $("sCount").textContent=N;$("sTime").textContent=fmt(L.reduce((a,x)=>a+x.min,0));
+ const k=Object.values(S);$("sLive").textContent=k.length?k.filter(Boolean).length+"/"+N:"–";
+ const nx=L.find(x=>!done.has(x.id)&&S[x.id]!==false);$("nextBtn").style.display=nx?"":"none";if(nx){$("nextBtn").href=nx.p;$("nextBtn").textContent=(n?"Continue: ":"Start: ")+nx.t+" ↗"}}
+function toggle(id,v){v?done.add(id):done.delete(id);try{localStorage.setItem("labs-done",JSON.stringify([...done]))}catch(e){}drawAll();if(v)toast(`${get(id).t} marked as done`)}
+function drawAll(){drawMap();drawDetail();drawCards();drawChips();drawStats()}
+function pick(id){sel=id;drawMap();drawDetail();document.querySelectorAll(".card").forEach(c=>c.classList.toggle("sel",c.dataset.id===id))}
+$("map").addEventListener("click",e=>{const n=e.target.closest(".n");if(n)pick(n.dataset.id)});
+$("map").addEventListener("keydown",e=>{const n=e.target.closest(".n");if(n&&(e.key==="Enter"||e.key===" ")){e.preventDefault();pick(n.dataset.id)}});
+$("grid").addEventListener("mouseover",e=>{const c=e.target.closest(".card");if(c&&c.dataset.id!==sel)pick(c.dataset.id)});
+$("grid").addEventListener("mousemove",e=>{const c=e.target.closest(".card");if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty("--mx",e.clientX-r.left+"px");c.style.setProperty("--my",e.clientY-r.top+"px")});
+$("grid").addEventListener("change",e=>{if(e.target.dataset.d)toggle(e.target.dataset.d,e.target.checked)});
+$("grid").addEventListener("click",e=>{const a=e.target.closest("h3 a");if(a&&a.closest(".off")){e.preventDefault();toast("Not published yet: push this folder to GitHub")}});
+$("chips").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(b){flt=b.dataset.f;drawAll()}});
+$("q").addEventListener("input",drawAll);$("sort").onchange=drawAll;
+$("q").addEventListener("keydown",e=>{if(e.key==="Enter"){const v=visible()[0];if(v)location.href=v.p}});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$("q").focus()}});
+async function check(){if(location.protocol==="file:")return;
+ await Promise.all(L.map(async x=>{try{S[x.id]=(await fetch(x.p+"index.html",{method:"HEAD",cache:"no-store"})).ok}catch(e){}}));
+ drawAll();const m=L.filter(x=>S[x.id]===false);$("foot").textContent=m.length?`${m.length} lab(s) not published yet`:"All labs reachable"}
+drawAll();check();
+</script>
 </body>
 </html>
